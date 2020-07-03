@@ -1,5 +1,7 @@
 package com.project.shop.model.dto.product;
 
+import com.project.shop.model.entity.Category;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -11,15 +13,12 @@ import javax.validation.constraints.NotBlank;
  * @author Алексей Климов
  */
 @Data
+@Builder
 public class ProductAddInfoDTO {
 
     @NotBlank
     @Length(max = 255)
     private String name;
-
-    @NotBlank
-    @Length(max = 255)
-    private String image;
 
     @NotBlank
     @Length(max = 255)
@@ -31,5 +30,9 @@ public class ProductAddInfoDTO {
 
     @NotBlank
     @Length(max = 255)
-    private String Category;
+    private Category category;
+
+    @NotBlank
+    @Length(max = 255)
+    private Long amount;
 }

@@ -2,20 +2,24 @@ package com.project.shop.controller;
 
 import com.project.shop.model.dto.user.UserInfoChangeDTO;
 import com.project.shop.model.dto.user.UserInfoGetDTO;
+import com.project.shop.model.dto.user.UserPasswordChangeDTO;
+import com.project.shop.model.entity.Role;
 import com.project.shop.model.entity.User;
-import com.project.shop.service.UserPageService;
+import com.project.shop.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.io.Console;
 import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Контроллер для страницы пользователя
@@ -26,13 +30,10 @@ import java.security.Principal;
 public class UserPageController {
 
     @Autowired
-    private UserPageService userPageService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private UserService userPageService;
 
     /**
-     * Возвращает данные о пользователе
+     * Вовзращает информацию о пользоваетеле
      *
      * @param principal
      * @return
@@ -45,24 +46,27 @@ public class UserPageController {
     })
     @GetMapping("/user")
     public UserInfoGetDTO getUserInfo(@ApiIgnore Principal principal) {
-        User userFromDB = userPageService.getUserByPrincipal(principal);
-        return UserInfoGetDTO.builder()
-                .building(userFromDB.getBuilding())
-                .city(userFromDB.getCity())
-                .country(userFromDB.getCountry())
-                .email(userFromDB.getEmail())
-                .flat(userFromDB.getFlat())
-                .gender(userFromDB.getGender())
-                .index(userFromDB.getIndex())
-                .name(userFromDB.getName())
-                .picture(userFromDB.getPicture())
-                .role(userFromDB.getRole().toString())
-                .street(userFromDB.getStreet())
-                .build();
+        return UserInfoGetDTO.createFromUser(userPageService.getUserByPrincipal(principal));
     }
 
     /**
-     * Изменяет пользователя в БД
+     * Возвращает списко всех пользоваетелей
+     *
+     * @param page
+     * @param size
+     * @return
+     */
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/users")
+    public List<UserInfoGetDTO> getUsersInfo(@RequestParam("page") Optional<Integer> page,
+                                             @RequestParam("size") Optional<Integer> size) {
+        return userPageService.getUsers(page, size).stream()
+                .map(UserInfoGetDTO::createFromUser)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Изменяет существующего пользователя
      *
      * @param principal
      * @param dto
@@ -75,16 +79,34 @@ public class UserPageController {
             @ApiResponse(code = 200, message = "Данные о пользователе успешно обновлены")
     })
     @PatchMapping("/user")
-    public void changeUserInfo(@ApiIgnore Principal principal, @Valid UserInfoChangeDTO dto) {
+    public UserInfoGetDTO changeUserInfo(@ApiIgnore Principal principal, @RequestBody @Valid UserInfoChangeDTO dto) {
         User userFromDb = userPageService.getUserByPrincipal(principal);
-        userFromDb.setEmail(dto.getEmail());
-        userFromDb.setName(dto.getName());
-        userFromDb.setPassword(passwordEncoder.encode(dto.getPassword()));
-        userFromDb.setGender(dto.getGender());
-        userFromDb.setCountry(dto.getCountry());
-        userFromDb.setCity(dto.getCity());
-        userFromDb.setStreet(dto.getStreet());
-        userFromDb.setBuilding(dto.getBuilding());
-        userFromDb.setFlat(dto.getFlat());
+        return UserInfoGetDTO.createFromUser(userPageService.saveUserFromDto(dto, userFromDb));
+    }
+
+    /**
+     * Меняет роль пользователя
+     *
+     * @param id
+     * @param role
+     * @return
+     */
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PatchMapping("/users/{user_id}")
+    public UserInfoGetDTO changeUserRole(@PathVariable("user_id") Long id, @RequestParam("role") Role role) {
+        return UserInfoGetDTO.createFromUser(userPageService.changeUserRole(id, role));
+    }
+
+
+    /**
+     * Меняет пароль пользователя
+     *
+     * @param principal
+     * @param dto
+     */
+    @PatchMapping("/user/password")
+    public void changeUserPassword(@ApiIgnore Principal principal, @RequestBody @Valid UserPasswordChangeDTO dto) {
+        User userFromDb = userPageService.getUserByPrincipal(principal);
+        userPageService.changeUserPasswordFromDto(userFromDb, dto);
     }
 }

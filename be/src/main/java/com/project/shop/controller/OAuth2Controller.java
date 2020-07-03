@@ -2,6 +2,7 @@ package com.project.shop.controller;
 
 import com.project.shop.exception.ClientRegistrationNotFound;
 import com.project.shop.model.dao.UserRepo;
+import com.project.shop.model.entity.Role;
 import com.project.shop.model.entity.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,8 +34,8 @@ public class OAuth2Controller {
     @Autowired
     private UserRepo userRepo;
 
-    @Value("${reroute.url}")
-    private String rerouteURL;
+    @Value("${frontend.url}")
+    private String frontendURL;
 
     /**
      * Сохраняет нового пользователя из OAuth2 в БД
@@ -57,6 +58,8 @@ public class OAuth2Controller {
                     User newUser = new User();
                     newUser.setName(userFromOauth.getAttribute("name"));
                     newUser.setGoogleId(principalName);
+                    newUser.setRole(Role.USER);
+                    newUser.setGender("UNIDENTIFIED");
                     userRepo.save(newUser);
                 }
                 break;
@@ -65,6 +68,8 @@ public class OAuth2Controller {
                     User newUser = new User();
                     newUser.setName(userFromOauth.getAttribute("real_name"));
                     newUser.setYandexId(principalName);
+                    newUser.setRole(Role.USER);
+                    newUser.setGender("UNIDENTIFIED");
                     userRepo.save(newUser);
                 }
                 break;
@@ -72,7 +77,7 @@ public class OAuth2Controller {
                 throw new ClientRegistrationNotFound("unknown client registration id" + clientRegistrationId);
         }
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setLocation(URI.create(rerouteURL + "/home.html"));
+        responseHeaders.setLocation(URI.create(frontendURL + "/home.html"));
         return new ResponseEntity<>(responseHeaders, HttpStatus.MOVED_PERMANENTLY);
     }
 }

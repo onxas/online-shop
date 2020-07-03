@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Shop</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Search.css">
+    <link rel="stylesheet" href="assets/css/Pretty-Registration-Form.css">
+    <link rel="stylesheet" href="assets/css/Registration-Form-with-Photo.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+<nav class="navbar navbar-light navbar-expand-md border rounded-0 shadow-sm navigation-clean"
+     style="background-color: #e3e3e3;">
+    <div class="container-fluid"><a class="navbar-brand" href="http://localhost:4200/home.html">Shop</a>
+        <ul class="nav navbar-nav">
+            <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
+                                             aria-expanded="false" href="#" style="color: rgb(0,0,0);">Категории</a>
+                <div class="dropdown-menu" role="menu" style="background-color: rgb(176,176,176);"><a
+                        class="dropdown-item" role="presentation"
+                        href="http://localhost:4200/search.html?category=FOOD">Еда</a><a class="dropdown-item"
+                                                                                         role="presentation"
+                                                                                         href="http://localhost:4200/search.html?category=DRINK">Напитки</a>
+                </div>
+            </li>
+        </ul>
+        <div class="input-group" id="searchProduct" style="width: 560px;"><input class="form-control" type="text"
+                                                                                 id="searchInput" minlength="1"
+                                                                                 maxlength="255" required=""
+                                                                                 placeholder="Найти">
+            <div class="input-group-append">
+                <button class="btn btn-primary" id="searchButton" type="button" onclick="searchButtonClick()">найти
+                </button>
+            </div>
+        </div>
+        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navcol-1"><a class="text-dark ml-auto"
+                                                               href="http://localhost:4200/cart.html"><i
+                class="fa fa-shopping-cart ml-auto" style="font-size: 20px;margin-left: 0px;margin-right: 3px;"></i>Корзина</a><a
+                class="text-dark ml-auto" href="http://localhost:4200/userPage.html"><i class="fa fa-user ml-auto"
+                                                                                        style="font-size: 20px;margin-left: 0px;margin-right: 3px;"></i>Личный
+            кабинет</a></div>
+    </div>
+</nav>
+<header class="text-center">
+    <h1>Статистика</h1>
+</header>
+<p class="text-center" id="productCount"></p>
+<p class="text-center" id="productAvailableCount"></p>
+<div class="card-deck">
+    <div class="card text-center" id="mostOrderedProductCard"
+         style="width: 450px;height: 550px;margin-left: 0px;min-width: 450px;max-width: 450px;min-height: 550px;max-height: 550px;">
+        <div class="card-header">Самый заказываемый товар</div>
+        <div class="card-header" id="mostOrderedProductHeading"></div>
+        <div class="card-body"><img id="mostOrderedProductImg" width="70" height="120"
+                                    style="width: 175px;height: 300px;"></div>
+        <div class="card-footer text-center">
+            <p class="text-center" id="mostOrderedProductDescr"></p>
+            <p class="text-center" id="mostOrderedProductPrice"></p><a id="mostOrderedProductLink" href="#">Посмотреть
+            подробнее</a></div>
+    </div>
+    <div class="card text-center" id="mostRatedProductCard"
+         style="width: 450px;height: 550px;margin-left: 0px;min-width: 450px;max-width: 450px;min-height: 550px;max-height: 550px;">
+        <div class="card-header">Товар с самым высоким рейтингом</div>
+        <div class="card-header" id="mostRatedProductHeading"></div>
+        <div class="card-body"><img id="mostRatedProductImg" width="70" height="120"
+                                    style="width: 175px;height: 300px;"></div>
+        <div class="card-footer text-center">
+            <p class="text-center" id="mostRatedProductDescr"></p>
+            <p class="text-center" id="mostRatedProductPrice"></p><a id="card4Link" href="#">Посмотреть подробнее</a>
+        </div>
+    </div>
+</div>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/bs-init.js"></script>
+<script src="assets/js/statistic/load.js"></script>
+<script src="assets/js/home/search.js"></script>
+</body>
+
+</html>

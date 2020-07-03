@@ -18,76 +18,104 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light navbar-expand-md border rounded-0 shadow-sm navigation-clean" style="background-color: #e3e3e3;">
-        <div class="container-fluid"><a class="navbar-brand" href="http://localhost:4200/home.html">Shop</a>
-            <ul class="nav navbar-nav">
-                <li class="nav-item dropdown show"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="true" href="#" style="color: rgb(0,0,0);">Категории</a>
-                    <div class="dropdown-menu show" role="menu" style="background-color: rgb(176,176,176);"><a class="dropdown-item" role="presentation" href="http://localhost:4200/home.html?category=FOOD">Еда</a><a class="dropdown-item" role="presentation" href="http://localhost:4200/home.html?category=DRINK">Напитки</a></div>
-                </li>
-            </ul>
-            <div class="input-group" id="searchProduct" style="width: 560px;">
-                <div class="input-group-prepend"></div><input class="form-control" type="text" minlength="1" maxlength="255" required="">
-                <div class="input-group-append"><button class="btn btn-primary" type="submit">найти</button></div>
-            </div><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1"><a class="text-dark ml-auto" href="http://localhost:4200/userPage.html"><i class="fa fa-user ml-auto" style="font-size: 20px;margin-left: 0px;margin-right: 3px;"></i>Личный кабинет</a></div>
-        </div>
-    </nav>
-    <div class="card-deck">
-        <div class="card text-center" id="card1" style="width: 350px;height: 600px;margin-left: 0px;">
-            <div class="card-header text-capitalize" id="card1Heading"></div>
-            <div class="card-body" id="1card"><img id="card1Img" width="70" height="120" style="width: 175px;height: 300px;"></div>
-            <div class="card-footer text-center">
-                <p class="text-capitalize text-center" id="card1Descr"></p>
-                <p class="text-capitalize text-center" id="card1Price"></p><a id="card1Link" href="#">Посмотреть подробнее</a></div>
-            <div class="card-footer" id="card1Admin"><a id="card1AdminLink" href="#">Редактировать</a></div>
-        </div>
-        <div class="card text-center" id="card2" style="width: 350px;height: 600px;margin-left: 0px;">
-            <div class="card-header" id="card2Heading"></div>
-            <div class="card-body" id="2card"><img id="card2Img" width="70" height="120" style="width: 175px;height: 300px;"></div>
-            <div class="card-footer text-center">
-                <p class="text-center" id="card2Descr"></p>
-                <p class="text-center" id="card2Price"></p><a id="card2Link" href="#">Посмотреть подробнее</a></div>
-            <div class="card-footer" id="card2Admin"><a id="card2AdminLink" href="#">Редактировать</a></div>
-        </div>
-        <div class="card text-center" id="card3" style="width: 350px;height: 600px;margin-left: 0px;">
-            <div class="card-header" id="card3Heading"></div>
-            <div class="card-body" id="3card"><img id="card3Img" width="70" height="120" style="width: 175px;height: 300px;"></div>
-            <div class="card-footer text-center">
-                <p class="text-center" id="card3Descr"></p>
-                <p class="text-center" id="card3Price"></p><a id="card3Link" href="#">Посмотреть подробнее</a></div>
-            <div class="card-footer" id="card3Admin"><a id="card3AdminLink" href="#">Редактировать</a></div>
-        </div>
-        <div class="card text-center" id="card4" style="width: 350px;height: 600px;margin-left: 0px;">
-            <div class="card-header" id="card4Heading"></div>
-            <div class="card-body" id="4card"><img id="card4Img" width="70" height="120" style="width: 175px;height: 300px;"></div>
-            <div class="card-footer text-center">
-                <p class="text-center" id="card4Descr"></p>
-                <p class="text-center" id="card4Price"></p><a id="card4Link" href="#">Посмотреть подробнее</a></div>
-            <div class="card-footer" id="card4Admin"><a id="card4AdminLink" href="#">Редактировать</a></div>
-        </div>
-    </div>
-    <nav>
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-            <li class="page-item" id="page0"><a class="page-link" href="home.html?page=0">1</a></li>
-            <li class="page-item" id="page1"><a class="page-link" href="home.html?page=1">2</a></li>
-            <li class="page-item" id="page2"><a class="page-link" href="home.html?page=2">3</a></li>
-            <li class="page-item" id="page3"><a class="page-link" href="home.html?page=3">4</a></li>
-            <li class="page-item" id="page4"><a class="page-link" href="home.html?page=4">5</a></li>
-            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+<nav class="navbar navbar-light navbar-expand-md border rounded-0 shadow-sm navigation-clean"
+     style="background-color: #e3e3e3;">
+    <div class="container-fluid"><a class="navbar-brand" href="http://localhost:4200/home.html">Shop</a>
+        <ul class="nav navbar-nav">
+            <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
+                                             aria-expanded="false" href="#" style="color: rgb(0,0,0);">Категории</a>
+                <div class="dropdown-menu" role="menu" style="background-color: rgb(176,176,176);"><a
+                        class="dropdown-item" role="presentation"
+                        href="http://localhost:4200/search.html?category=FOOD">Еда</a><a class="dropdown-item"
+                                                                                         role="presentation"
+                                                                                         href="http://localhost:4200/search.html?category=DRINK">Напитки</a>
+                </div>
+            </li>
         </ul>
-    </nav><a class="btn btn-success" role="button" id="addProductButton" href="http://localhost:4200/addProductPage.html">Добавить товар</a>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
-    <script src="assets/js/load.js"></script>
-    <script src="assets/js/login/loginButton.js"></script>
-    <script src="assets/js/register/registerButton.js"></script>
-    <script src="assets/js/admin/addProduct.js"></script>
-    <script src="assets/js/admin/changeProduct.js"></script>
-    <script src="assets/js/admin/deleteProduct.js"></script>
-    <script src="assets/js/home/search.js"></script>
-    <script src="assets/js/user/logout.js"></script>
+        <div class="input-group" id="searchProduct" style="width: 560px;"><input class="form-control" type="text"
+                                                                                 id="searchInput" minlength="1"
+                                                                                 maxlength="255" required=""
+                                                                                 placeholder="Найти">
+            <div class="input-group-append">
+                <button class="btn btn-primary" id="searchButton" type="button" onclick="searchButtonClick()">найти
+                </button>
+            </div>
+        </div>
+        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navcol-1"><a class="text-dark ml-auto"
+                                                               href="http://localhost:4200/cart.html"><i
+                class="fa fa-shopping-cart ml-auto" style="font-size: 20px;margin-left: 0px;margin-right: 3px;"></i>Корзина</a><a
+                class="text-dark ml-auto" href="http://localhost:4200/userPage.html"><i class="fa fa-user ml-auto"
+                                                                                        style="font-size: 20px;margin-left: 0px;margin-right: 3px;"></i>Личный
+            кабинет</a></div>
+    </div>
+</nav>
+<header class="text-center">
+    <h1>Главная страница</h1>
+</header>
+<div class="card-deck">
+    <div class="card text-center" id="card1"
+         style="width: 450px;height: 550px;margin-left: 0px;min-height: 550px;max-height: 550px;min-width: 450px;max-width: 450px;">
+        <div class="card-header text-capitalize" id="card1Heading"></div>
+        <div class="card-body" id="1card"><img id="card1Img" width="70" height="120"
+                                               style="width: 175px;height: 300px;"></div>
+        <div class="card-footer text-center">
+            <p class="text-capitalize text-center" id="card1Descr"></p>
+            <p class="text-capitalize text-center" id="card1Price"></p><a id="card1Link" href="#">Посмотреть
+            подробнее</a></div>
+        <div class="card-footer" id="card1Admin"><a id="card1AdminLink" href="#">Редактировать</a></div>
+    </div>
+    <div class="card text-center" id="card2"
+         style="width: 450px;height: 550px;margin-left: 0px;min-width: 450px;max-width: 450px;min-height: 550px;max-height: 550px;">
+        <div class="card-header" id="card2Heading"></div>
+        <div class="card-body" id="2card"><img id="card2Img" width="70" height="120"
+                                               style="width: 175px;height: 300px;"></div>
+        <div class="card-footer text-center">
+            <p class="text-center" id="card2Descr"></p>
+            <p class="text-center" id="card2Price"></p><a id="card2Link" href="#">Посмотреть подробнее</a></div>
+        <div class="card-footer" id="card2Admin"><a id="card2AdminLink" href="#">Редактировать</a></div>
+    </div>
+    <div class="card text-center" id="card3"
+         style="width: 450px;height: 550px;margin-left: 0px;min-width: 450px;max-width: 450px;min-height: 550px;max-height: 550px;">
+        <div class="card-header" id="card3Heading"></div>
+        <div class="card-body" id="3card"><img id="card3Img" width="70" height="120"
+                                               style="width: 175px;height: 300px;"></div>
+        <div class="card-footer text-center">
+            <p class="text-center" id="card3Descr"></p>
+            <p class="text-center" id="card3Price"></p><a id="card3Link" href="#">Посмотреть подробнее</a></div>
+        <div class="card-footer" id="card3Admin"><a id="card3AdminLink" href="#">Редактировать</a></div>
+    </div>
+    <div class="card text-center" id="card4"
+         style="width: 450px;height: 550px;margin-left: 0px;min-width: 450px;max-width: 450px;min-height: 550px;max-height: 550px;">
+        <div class="card-header" id="card4Heading"></div>
+        <div class="card-body" id="4card"><img id="card4Img" width="70" height="120"
+                                               style="width: 175px;height: 300px;"></div>
+        <div class="card-footer text-center">
+            <p class="text-center" id="card4Descr"></p>
+            <p class="text-center" id="card4Price"></p><a id="card4Link" href="#">Посмотреть подробнее</a></div>
+        <div class="card-footer" id="card4Admin"><a id="card4AdminLink" href="#">Редактировать</a></div>
+    </div>
+</div>
+<nav>
+    <ul class="pagination">
+        <li class="page-item" onclick="prevPage()"><a class="page-link" id="prev" href="#" aria-label="Previous"><span
+                aria-hidden="true">«</span></a></li>
+        <li class="page-item" onclick="nextPage()"><a class="page-link" id="next" href="#" aria-label="Next"><span
+                aria-hidden="true">»</span></a></li>
+    </ul>
+</nav>
+<a class="btn btn-success" role="button" id="addProductButton" href="http://localhost:4200/addProductPage.html">Добавить
+    товар</a>
+<a class="btn btn-primary" role="button" id="statisticButton" href="http://localhost:4200/statistic.html">Статистика</a>
+<a class="btn btn-primary" role="button" id="usersButton" href="http://localhost:4200/users.html">Список
+    пользователей</a>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/bs-init.js"></script>
+<script src="assets/js/home/load.js"></script>
+<script src="assets/js/home/pagination.js"></script>
+<script src="assets/js/home/search.js"></script>
 </body>
 
 </html>

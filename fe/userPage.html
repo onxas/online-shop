@@ -18,49 +18,68 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light navbar-expand-md border rounded-0 shadow-sm navigation-clean" style="background-color: #e3e3e3;">
-        <div class="container-fluid"><a class="navbar-brand" href="http://localhost:4200/home.html">Shop</a>
-            <ul class="nav navbar-nav">
-                <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(0,0,0);">Категории</a>
-                    <div class="dropdown-menu" role="menu" style="background-color: rgb(176,176,176);"><a class="dropdown-item" role="presentation" href="http://localhost:4200/home.html?category=FOOD">Еда</a><a class="dropdown-item" role="presentation" href="http://localhost:4200/home.html?category=DRINK">Напитки</a></div>
-                </li>
-            </ul>
-            <div class="input-group" id="searchProduct" style="width: 560px;">
-                <div class="input-group-prepend"></div><input class="form-control" type="text" minlength="1" maxlength="255" required="">
-                <div class="input-group-append"><button class="btn btn-primary" type="submit">найти</button></div>
-            </div><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1"><a class="text-dark ml-auto" href="http://localhost:4200/userPage.html"><i class="fa fa-user ml-auto" style="font-size: 20px;margin-left: 0px;margin-right: 3px;"></i>Личный кабинет</a></div>
+<nav class="navbar navbar-light navbar-expand-md border rounded-0 shadow-sm navigation-clean"
+     style="background-color: #e3e3e3;">
+    <div class="container-fluid"><a class="navbar-brand" href="http://localhost:4200/home.html">Shop</a>
+        <ul class="nav navbar-nav">
+            <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
+                                             aria-expanded="false" href="#" style="color: rgb(0,0,0);">Категории</a>
+                <div class="dropdown-menu" role="menu" style="background-color: rgb(176,176,176);"><a
+                        class="dropdown-item" role="presentation" href="http://localhost:4200/search.html?category=FOOD">Еда</a><a
+                        class="dropdown-item" role="presentation" href="http://localhost:4200/search.html?category=DRINK">Напитки</a>
+                </div>
+            </li>
+        </ul>
+        <div class="input-group" id="searchProduct" style="width: 560px;"><input class="form-control" type="text"
+                                                                                 id="searchInput" minlength="1"
+                                                                                 maxlength="255" required=""
+                                                                                 placeholder="Найти">
+            <div class="input-group-append">
+                <button class="btn btn-primary" id="searchButton" type="button" onclick="searchButtonClick()">найти
+                </button>
+            </div>
         </div>
-    </nav>
-    <div class="card text-center border rounded-0 shadow" style="margin: 0;margin-top: 32px;width: 500px;margin-right: auto;margin-left: auto;">
-        <div class="card-header">
-            <h4>Мой профиль</h4>
-        </div>
-        <div class="card-body">
-            <h5 class="text-secondary card-subtitle">Основная информация</h5>
-            <h5 class="text-left" id="name">Имя:</h5>
-            <h5 class="text-left">Адрес электронной почты:</h5>
-            <h5 class="text-left">Пол:</h5>
-            <h5 class="text-center text-secondary card-subtitle">Информация для доставки</h5>
-            <h5 class="text-left">Страна:</h5>
-            <h5 class="text-left">Город:</h5>
-            <h5 class="text-left">Улица:</h5>
-            <h5 class="text-left">Строение:</h5>
-            <h5 class="text-left">Квартира:</h5>
-        </div>
-        <div class="card-footer"><button onCLick="logoutButton()" class="btn btn-danger" id="logoutButton" type="button">Выйти из аккаунта</button></div>
+        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navcol-1"><a class="text-dark ml-auto"
+                                                               href="http://localhost:4200/cart.html"><i
+                class="fa fa-shopping-cart ml-auto" style="font-size: 20px;margin-left: 0px;margin-right: 3px;"></i>Корзина</a><a
+                class="text-dark ml-auto" href="http://localhost:4200/userPage.html"><i class="fa fa-user ml-auto"
+                                                                                        style="font-size: 20px;margin-left: 0px;margin-right: 3px;"></i>Личный
+            кабинет</a></div>
     </div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
-    <script src="assets/js/load.js"></script>
-    <script src="assets/js/login/loginButton.js"></script>
-    <script src="assets/js/register/registerButton.js"></script>
-    <script src="assets/js/admin/addProduct.js"></script>
-    <script src="assets/js/admin/changeProduct.js"></script>
-    <script src="assets/js/admin/deleteProduct.js"></script>
-    <script src="assets/js/home/search.js"></script>
-    <script src="assets/js/user/logout.js"></script>
+</nav>
+<div class="card text-center border rounded-0 shadow"
+     style="margin: 0;margin-top: 32px;width: 500px;margin-right: auto;margin-left: auto;">
+    <div class="card-header">
+        <h4>Мой профиль</h4>
+    </div>
+    <div class="card-body"><img id="picture" width="150" height="200"
+                                style="margin-bottom: 19px;width: 100px;height: 100px;">
+        <h5 class="text-secondary card-subtitle">Основная информация</h5>
+        <h5 class="text-left" id="name">Имя:</h5>
+        <h5 class="text-left" id="email">Адрес электронной почты:</h5>
+        <h5 class="text-left" id="gender">Пол:</h5>
+    </div>
+    <div class="card-footer">
+        <div class="btn-group-vertical" role="group"><a class="btn btn-primary" role="button"
+                                                        href="http://localhost:4200/changeUserPage.html">Изменить
+            информацию</a><a class="btn btn-warning" role="button" href="http://localhost:4200/changePasswordPage.html">Сменить
+            пароль</a></div>
+    </div>
+    <div class="card-footer">
+        <button onCLick="logoutButton()" class="btn btn-danger" id="logoutButton" type="button">Выйти из аккаунта
+        </button>
+    </div>
+</div>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/bs-init.js"></script>
+<script src="assets/js/user/userPageLoad.js"></script>
+<script src="assets/js/home/search.js"></script>
+<script src="assets/js/user/changeUserInfo.js"></script>
+<script src="assets/js/user/changeUserPassword.js"></script>
+<script src="assets/js/user/logout.js"></script>
 </body>
 
 </html>

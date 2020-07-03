@@ -28,17 +28,9 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String name;
-    private String picture;
     private String gender;
-    private String country;
-    private String city;
-    private String street;
-    private String building;
-    private String flat;
-    private String index;
     @Enumerated(EnumType.STRING)
     private Role role;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

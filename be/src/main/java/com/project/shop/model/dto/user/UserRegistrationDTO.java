@@ -23,9 +23,9 @@ public class UserRegistrationDTO {
             "+(?:[a-zA-Z]){2,}\\.?)$", message = "wrong email")
     private String email;
 
-    @NotBlank(message = "wrong password")
+    @NotBlank
     private String password;
 
-    @NotBlank(message = "wrong name")
+    @NotBlank
     private String name;
 }

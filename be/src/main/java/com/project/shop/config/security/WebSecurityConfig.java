@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
@@ -19,9 +19,8 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.PostConstruct;
@@ -39,13 +38,11 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableOAuth2Client
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
-    /**
-     * URL фронтенда
-     */
-    @Value("${reroute.url}")
-    private String rerouteURL;
+    @Value("${frontend.url}")
+    private String frontendUrl;
 
     @Value("${google.id}")
     private String googleClientId;
@@ -58,6 +55,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 
     @Value("${yandex.secret}")
     private String yandexClientSecret;
+
+    @Value("${image.file.path}")
+    private String imagePath;
 
     @Autowired
     private CustomUserService userService;
@@ -82,6 +82,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Конфигурация http запросов
+     *
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -90,11 +96,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/registration", "/product", "/product/*", "/api-docs",
+                .antMatchers("/registration", "/product", "/product/**", "/api-docs",
                         "/swagger-resources/**",
                         "/swagger-ui.html",
                         "/webjars/**",
-                        "/configuration/ui").permitAll()
+                        "/configuration/ui",
+                        "/img/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
@@ -116,6 +123,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .deleteCookies("JSESSIONID");
     }
 
+    /**
+     * Конфигурация аутентификации
+     *
+     * @param auth
+     * @throws Exception
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
@@ -123,15 +136,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     }
 
 
+    /**
+     * Аутентификация Cross-Origin
+     *
+     * @param registry
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(rerouteURL)
+                .allowedOrigins(frontendUrl)
                 .allowedMethods("*")
                 .allowCredentials(true)
                 .allowedHeaders("*");
     }
 
+    /**
+     * Репозиторий для хранения конфигурации об OAuth 2 Client
+     *
+     * @return
+     */
     @PostConstruct
     public ClientRegistrationRepository clientRegistrationRepository() {
         ClientRegistration yandex =
@@ -150,10 +173,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
         return new InMemoryClientRegistrationRepository(clientRegistrationList);
     }
 
+    /**
+     * Сервис для OAuth 2 Client
+     *
+     * @return
+     */
     @Bean
     public OAuth2AuthorizedClientService oAuth2AuthorizedClientService() {
         return new
                 InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository());
     }
 
+    /**
+     * Конфигурация ресурса изображений
+     *
+     * @param registry
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations("file:" + imagePath + "///");
+    }
 }

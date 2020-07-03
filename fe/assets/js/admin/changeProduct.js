@@ -2,48 +2,41 @@ $("#changeProductForm").submit(function (e) {
     e.preventDefault();
     const searchString = new URLSearchParams(window.location.search);
     const id = searchString.get('id');
-    let name, description, price, image, category;
-    $.ajax({
-        method: "GET",
-        url: "http://localhost:8080/product/" + id,
-        dataType: "json",
-        async: false,
-        success: function (json) {
-            name = json.name;
-            description = json.description;
-            price = json.price;
-            image = json.image;
-            category = json.category;
-        }
-    });
-    let newName = document.getElementById("name").value;
-    let newDescription = document.getElementById("description").value;
-    let newPrice = document.getElementById("price").value;
-    let newImage = document.getElementById("image").value;
-    let newCategory = document.getElementById("category").value;
-    if (newName !== "") name = newName;
-    if (newDescription !== "") description = newDescription;
-    if (newPrice !== "") price = newPrice;
-    if (newImage !== "") image = newImage;
-    if (newCategory !== "") category = newCategory;
+    let name, description, price, picture, category, amount;
+    name = document.getElementById("name").value;
+    description = document.getElementById("description").value;
+    price = document.getElementById("price").value;
+    category = document.getElementById("category").value;
+    amount = document.getElementById("amount").value;
+    var file = $("#picture").prop('files')[0];
     const request = {
         name: name,
         description: description,
         price: price,
-        image: image,
-        category: category
+        category: category,
+        amount: amount
     };
+    const json = JSON.stringify(request);
+    const blob = new Blob([json], {
+        type: 'application/json'
+    });
+    const data = new FormData();
+    data.append("json", blob);
+    data.append("file", file);
     $.ajax({
         url: "http://localhost:8080/product/" + id,
         method: "patch",
         dataType: "json",
-        contentType: "application/json",
-        data: JSON.stringify(request),
-        async: false,
+        contentType: false,
+        processData: false,
+        data: data,
         statusCode: {
             200: function () {
-                window.location.replace("http://localhost:4200/product.html?id=" + id);
+                window.location.replace("http://localhost:4200/productPage.html?id=" + id);
             }
+        },
+        xhrFields: {
+            withCredentials: true
         }
     });
 });

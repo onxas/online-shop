@@ -6,6 +6,9 @@ $("#changeProductForm").bind("reset", function () {
         method: "DELETE",
         success: function () {
             window.location.replace("http://localhost:4200/home.html");
+        },
+        xhrFields: {
+            withCredentials: true
         }
     })
 });
